@@ -2,6 +2,7 @@ package es.cic.curso.ejercicio2.controller;
 
 import es.cic.curso.ejercicio2.entity.Documento;
 import es.cic.curso.ejercicio2.entity.Expediente;
+import es.cic.curso.ejercicio2.repository.ExpedienteRepository;
 import es.cic.curso.ejercicio2.service.ExpedienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import java.util.List;
 public class ExpedienteController {
 
     @Autowired
+    ExpedienteRepository expedienteRepository;
+    @Autowired
     private ExpedienteService expedienteService;
 
     // Crear un nuevo expediente
@@ -27,16 +30,8 @@ public class ExpedienteController {
      */
 
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> crear(@RequestBody Expediente expediente) {
-        try {
-            Expediente expedienteCreado = expedienteService.crear(expediente); // Guarda el expediente y recibe el
-                                                                               // objeto guardado, con ID generado
-            return ResponseEntity.status(HttpStatus.CREATED).body(expedienteCreado.getId()); // Devuelve el ID del
-                                                                                             // expediente creado
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear expediente");
-        }
+    public Expediente crear(@RequestBody Expediente expediente) {
+        return expedienteService.crear(expediente);
     }
 
     // Leer un expediente por su ID
@@ -52,7 +47,7 @@ public class ExpedienteController {
     // Listar todos los expedientes
     @GetMapping(value = "/listar")
     public List<Expediente> listar() {
-        return expedienteService.listar();
+        return expedienteRepository.findAll();
     }
 
     // Actualizar un expediente existente
@@ -88,5 +83,26 @@ public class ExpedienteController {
         List<Documento> documentos = expediente.getDocumentos();
 
         return ResponseEntity.ok(documentos);
+    }
+
+    // Actualizar un documento existente dentro de un expediente
+    @PutMapping("/{expedienteId}/documento/{documentoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void actualizarDocumento(@PathVariable Long expedienteId, @PathVariable Long documentoId,
+            @RequestBody Documento documento) {
+        Expediente expediente = expedienteService.leer(expedienteId);
+        if (expediente == null) {
+            throw new RuntimeException("Expediente no encontrado para el ID: " + expedienteId);
+        }
+        Documento doc = expediente.getDocumentos().stream()
+                .filter(d -> d.getId().equals(documentoId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Documento no encontrado para el ID: " + documentoId));
+
+        doc.setTitulo(documento.getTitulo());
+        doc.setContenido(documento.getContenido());
+        expedienteService.actualizar(expediente);
+        System.out
+                .println("Documento " + documentoId + " del expediente " + expedienteId + " actualizado correctamente");
     }
 }

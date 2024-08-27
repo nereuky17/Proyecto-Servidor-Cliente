@@ -17,6 +17,7 @@ public class ExpedienteService {
     @Autowired
     private ExpedienteRepository expedienteRepository;
 
+    @Transactional
     public Expediente crear(Expediente expediente) {
         return expedienteRepository.save(expediente); // Devuelve el expediente guardado con el ID generado
     }

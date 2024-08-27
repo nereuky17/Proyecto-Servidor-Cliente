@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';  // Importamos las herramientas del router
+import { RouterLink, RouterView } from 'vue-router'; 
 </script>
 
 <template>
@@ -7,16 +7,19 @@ import { RouterLink, RouterView } from 'vue-router';  // Importamos las herramie
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
     <nav>
-      <RouterLink to="/expediente">Expedientes</RouterLink>
-      <RouterLink to="/documento">Documentos</RouterLink>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/expediente">Lista Expedientes</RouterLink>
+      <RouterLink to="/documento">Inserción Expediente y Documento</RouterLink>
+      <RouterLink to="/expedientebus">Búsqueda Expediente</RouterLink>
     </nav>
   </header>
 
   <main>
-    <!-- Aquí el RouterView renderizará el componente correspondiente según la ruta -->
+
     <RouterView />
   </main>
 </template>
+
 
 <style scoped>
 header {

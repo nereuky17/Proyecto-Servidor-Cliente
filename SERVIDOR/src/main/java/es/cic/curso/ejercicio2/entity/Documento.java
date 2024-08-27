@@ -1,9 +1,7 @@
 
 package es.cic.curso.ejercicio2.entity;
 
-
-
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,9 +12,9 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Documento {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String titulo;
@@ -24,7 +22,7 @@ public class Documento {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "expediente_id")
-   
+    @JsonBackReference
     private Expediente expediente;
 
     public Documento() {
@@ -60,8 +58,6 @@ public class Documento {
     public void setContenido(String contenido) {
         this.contenido = contenido;
     }
-
-    
 
     public Expediente getExpediente() {
         return expediente;
@@ -119,5 +115,4 @@ public class Documento {
         return "Documento [id=" + id + ", titulo=" + titulo + ", contenido=" + contenido + "]";
     }
 
-  
 }

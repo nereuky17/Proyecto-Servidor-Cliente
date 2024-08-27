@@ -15,18 +15,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.cic.curso.ejercicio2.entity.Documento;
-import es.cic.curso.ejercicio2.entity.Expediente;
-import es.cic.curso.ejercicio2.repository.DocumentoRepository;
-import es.cic.curso.ejercicio2.repository.ExpedienteRepository;
 import es.cic.curso.ejercicio2.service.DocumentoService;
-import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/documento")
 public class DocumentoController {
-
-    ExpedienteRepository expedienteRepository;
-    DocumentoRepository documentoRepository;
 
     @Autowired
     DocumentoService documentoService;
@@ -47,19 +40,8 @@ public class DocumentoController {
      * 
      */
     @ResponseStatus(HttpStatus.CREATED)
-    @Transactional
-    public Documento crear(Documento documento) {
-        Expediente expediente = documento.getExpediente();
-        if (expediente.getId() == null) {
-            // Guardar el expediente si aún no ha sido persistido
-            expediente = expedienteRepository.save(expediente);
-        }
-
-        // Asignar el expediente persistido al documento
-        documento.setExpediente(expediente);
-
-        // Guardar el documento
-        return documentoRepository.save(documento);
+    public long crear(@RequestBody Documento documento) {
+        return documentoService.crear(documento);
     }
 
     // Leer un documento por su ID

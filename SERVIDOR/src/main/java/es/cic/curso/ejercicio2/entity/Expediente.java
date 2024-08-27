@@ -17,7 +17,7 @@ import jakarta.validation.constraints.Size;
 public class Expediente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Size

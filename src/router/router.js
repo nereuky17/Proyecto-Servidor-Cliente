@@ -1,8 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Expediente from '@/components/Expediente.vue';  // Alias @ asume que está configurado en vite.config.js
+import Home from '@/components/Home.vue'; 
+import Expediente from '@/components/Expediente.vue';  
 import Documento from '@/components/Documento.vue';
+import EditarDocumento from '@/components/EditDocument.vue'; 
+import BusquedaExpediente from '@/components/BusquedaExpediente.vue'; 
 
 const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
   {
     path: '/',
     redirect: '/expediente'  
@@ -16,6 +24,16 @@ const routes = [
     path: '/documento',
     name: 'Documento',
     component: Documento
+  },
+  {
+    path: '/documento/editar/:id', // Ruta para editar documento
+    name: 'EditarDocumento',
+    component: EditarDocumento
+  },
+  {
+    path: '/expedientebus', // Ruta para editar documento
+    name: 'BusquedaExpediente',
+    component: BusquedaExpediente
   }
 ];
 
