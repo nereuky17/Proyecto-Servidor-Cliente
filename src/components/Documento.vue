@@ -6,7 +6,26 @@
       <button @click="cambiarADocumento">Insertar Documento</button>
     </div>
 
-    <!-- Mostrar solo el formulario de documento cuando se edita -->
+    <!-- Mostrar solo el formulario de expediente cuando se selecciona -->
+    <div v-if="mostrarFormularioExpediente">
+      <h2>Crear Expediente</h2>
+
+      <label for="expedienteNombre">Nombre del Expediente:</label>
+      <input id="expedienteNombre" v-model="nuevoExpediente.nombre" />
+
+      <!-- Botón para añadir expediente -->
+      <button @click="añadirExpediente">Añadir Expediente</button>
+
+      <!-- Mostrar los datos del expediente creado -->
+      <div v-if="expedienteCreado">
+        <h3>Expediente Creado:</h3>
+        <p>ID: {{ expedienteCreado.id }}</p>
+        <p>Nombre: {{ expedienteCreado.nombre }}</p>
+       
+      </div>
+    </div>
+
+    <!-- Mostrar solo el formulario de documento cuando se selecciona o se está editando -->
     <div v-if="mostrarFormularioDocumento || isEditing">
       <h2 v-if="isEditing">Editar Documento</h2>
       <h2 v-else>Crear Documento</h2>
@@ -19,11 +38,11 @@
 
       <!-- Mostrar el campo de ID del expediente en el modo de creación o como label en el modo de edición -->
       <div v-if="isEditing">
-        <label>ID del Expediente: {{ expedienteId }}</label>
+        <label>ID del Expediente: {{ expedienteId }} </label>
       </div>
       <div v-else>
         <label for="expedienteIdManual">ID del Expediente:</label>
-        <input id="expedienteIdManual" v-model="expedienteIdManual" placeholder="Escriba el ID del expediente manualmente" />
+        <input id="expedienteIdManual" v-model="expedienteIdManual" placeholder="Escriba el ID del expediente manualmente" readonly />
       </div>
 
       <!-- Botón de añadir o actualizar documento -->
@@ -40,8 +59,8 @@ import axios from 'axios';
 
 // Variables reactivas
 const isEditing = ref(false); // Modo de edición
-const isExpedienteCreado = ref(false); // Controla si el expediente ha sido creado
 const nuevoExpediente = ref({ nombre: '' });
+const expedienteCreado = ref(null); // Almacena los datos del expediente creado
 const expedienteId = ref(null); // Almacena el ID del expediente creado o editado
 const expedienteIdManual = ref(''); // Campo para que el usuario escriba manualmente el ID del expediente
 const nuevoDocumento = ref({ titulo: '', contenido: '' });
@@ -107,9 +126,30 @@ const añadirDocumentos = () => {
       // Limpia el formulario de documento tras la creación
       nuevoDocumento.value = { titulo: '', contenido: '' };
       expedienteIdManual.value = ''; // Limpia el campo de ID manual
+      expedienteCreado.value='';
     })
     .catch(error => {
       console.error('Error al añadir documento:', error);
+    });
+};
+
+// Función para añadir expediente
+const añadirExpediente = () => {
+  axios.post('/expediente/crear', nuevoExpediente.value)
+    .then(response => {
+      console.log('Expediente añadido correctamente:', response.data);
+      // Limpia el formulario de expediente tras la creación
+      nuevoExpediente.value = { nombre: '' };
+      
+      // Almacena los datos del expediente creado
+      expedienteCreado.value = response.data;
+
+      // Habilita el formulario de documento y asigna el ID del expediente recién creado
+      expedienteIdManual.value = response.data.id;
+      mostrarFormularioDocumento.value = true;
+    })
+    .catch(error => {
+      console.error('Error al añadir expediente:', error);
     });
 };
 

@@ -24,7 +24,7 @@
   
       const fetchDocumento = () => {
         if (documentoId) {
-        axios.get(`http://localhost:8082/expediente/${expedienteId}/documento/${documentoId}`)
+        axios.get(`/expediente/${expedienteId}/documento/${documentoId}`)
           .then(response => {
             documento.value = response.data;
           })
@@ -37,7 +37,7 @@
       const actualizarDocumento = () => {
         if (documentoId) {
         // Actualizar documento existente
-        axios.put(`http://localhost:8082/expediente/${expedienteId}/documento/${documentoId}`, documento.value)
+        axios.put(`/expediente/${expedienteId}/documento/${documentoId}`, documento.value)
           .then(() => {
             router.push('/expedientes');
           })

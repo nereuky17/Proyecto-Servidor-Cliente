@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         buscar() {
-            const API_URL = 'http://localhost:8082/expediente/'; // Asegúrate de que esta URL sea correcta
+            const API_URL = '/expediente/'; // Asegúrate de que esta URL sea correcta
             fetch(`${API_URL}${this.id}/documentos`)
                 .then(response => {
                     if (!response.ok) {
