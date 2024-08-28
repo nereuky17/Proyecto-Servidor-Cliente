@@ -1,62 +1,49 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'; 
+import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/expediente">Lista Expedientes</RouterLink>
-      <RouterLink to="/documento">Inserción Expediente y Documento</RouterLink>
-      <RouterLink to="/expedientebus">Búsqueda Expediente</RouterLink>
+  <div>
+    <nav class="navbar">
+      <RouterLink to="/" class="nav-link">Home</RouterLink> |
+      <RouterLink to="/expediente" class="nav-link">Lista Expedientes</RouterLink> |
+      <RouterLink to="/documento" class="nav-link">Inserción Expediente y Documento</RouterLink> |
+      <RouterLink to="/expedientebus" class="nav-link">Búsqueda Expediente</RouterLink>
     </nav>
-  </header>
-
-  <main>
-
-    <RouterView />
-  </main>
+    
+    <main>
+      <RouterView />
+    </main>
+  </div>
 </template>
 
-
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+.navbar {
+  background-color: grey;
+  padding: 1rem;
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 5px;
 }
 
-nav a {
+.nav-link {
   color: #42b983;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
+  font-size: 1.2rem;
 }
 
-nav a.router-link-exact-active {
+.nav-link:hover {
   text-decoration: underline;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+main {
+  padding: 1rem;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
+@media (min-width: 1024px) {
+  .navbar {
+    justify-content: flex-start;
   }
 }
 </style>

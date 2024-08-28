@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="text" v-model="id" placeholder="Enter ID">
+        <input type="text" v-model="id" placeholder="Introduzca Id">
         <button @click="buscar">Buscar</button>
         <ul>
             <li v-for="documento in documentos" :key="documento.id">

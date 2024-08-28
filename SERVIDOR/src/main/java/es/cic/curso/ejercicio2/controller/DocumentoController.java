@@ -21,6 +21,11 @@ import es.cic.curso.ejercicio2.service.DocumentoService;
 @RequestMapping("/documento")
 public class DocumentoController {
 
+    @RequestMapping(value = "/{path:[^\\.]*}")
+    public String forward() {
+        return "forward:/index.html";
+    }
+
     @Autowired
     DocumentoService documentoService;
 

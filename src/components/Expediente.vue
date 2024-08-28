@@ -52,7 +52,7 @@
       const router = useRouter();
   
       const fetchExpedientes = () => {
-        axios.get('http://localhost:8082/expediente/listar')
+        axios.get('/expediente/listar', { withCredentials: true })
           .then(response => {
             expedientes.value = response.data;
           })
@@ -62,11 +62,11 @@
       };
   
       const editDocumento = (id) => {
-        router.push({ name: 'EditarDocumento', params: { id } });
+        router.push(`/documento/${id}`);
       };
   
       const deleteDocumento = (id) => {
-        axios.delete(`http://localhost:8082/documento/${id}`)
+        axios.delete(`/documento/${id}`, { withCredentials: true })
           .then(() => {
             fetchExpedientes(); // Refresca la lista de expedientes después de eliminar
           })

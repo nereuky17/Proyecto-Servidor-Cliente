@@ -4,10 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueDevTools(),
-  ],
+  plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -19,14 +16,15 @@ export default defineConfig({
         target: 'http://localhost:8082',  // Dirección del backend Spring Boot
         changeOrigin: true,
         secure: false,
+    
+        ws: true,
       },
       '/documento': {
         target: 'http://localhost:8082',  // Dirección del backend Spring Boot
         changeOrigin: true,
         secure: false,
+        ws: true,
       },
     },
   },
-
-  
-})
+});

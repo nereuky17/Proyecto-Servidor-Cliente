@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Service
 @Transactional
 public class DocumentoService {
@@ -17,8 +16,8 @@ public class DocumentoService {
     private DocumentoRepository documentoRepository;
 
     public long crear(Documento documento) {
-         Documento savedDocumento = documentoRepository.save(documento);
-         System.out.println(savedDocumento);
+        Documento savedDocumento = documentoRepository.save(documento);
+        System.out.println(savedDocumento);
         return savedDocumento.getId();
     }
 
@@ -26,11 +25,16 @@ public class DocumentoService {
         return documentoRepository.findById(id).orElse(null);
     }
 
-    public Documento actualizar(Documento documento) {
-        if (documento.getId() == null) {
-            throw new RuntimeException("ID no proporcionado para la actualización");
-        }
-        return documentoRepository.save(documento);
+    public void actualizar(Documento documento) {
+        Documento documentoExistente = documentoRepository.findById(documento.getId())
+                .orElseThrow(() -> new RuntimeException("Documento no encontrado"));
+
+        // Actualiza los campos necesarios
+        documentoExistente.setTitulo(documento.getTitulo());
+        documentoExistente.setContenido(documento.getContenido());
+
+        // Guarda el documento actualizado
+        documentoRepository.save(documentoExistente);
     }
 
     public void borrar(Long id) {
@@ -41,4 +45,3 @@ public class DocumentoService {
         return (List<Documento>) documentoRepository.findAll();
     }
 }
-

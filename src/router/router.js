@@ -21,7 +21,7 @@ const routes = [
     component: Expediente
   },
   {
-    path: '/documento',
+    path: '/documento/:id?',
     name: 'Documento',
     component: Documento
   },

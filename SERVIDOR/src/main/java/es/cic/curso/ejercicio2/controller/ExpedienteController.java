@@ -14,6 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/expediente")
 public class ExpedienteController {
+    @RequestMapping(value = "/{path:[^\\.]*}")
+    public String forward() {
+        return "forward:/index.html";
+    }
 
     @Autowired
     ExpedienteRepository expedienteRepository;
