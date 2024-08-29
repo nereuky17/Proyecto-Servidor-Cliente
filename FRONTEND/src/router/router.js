@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import Home from '@/components/Home.vue'; 
 import Expediente from '@/components/Expediente.vue';  
 import Documento from '@/components/Documento.vue';
@@ -11,14 +11,16 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  {
-    path: '/',
-    redirect: '/expediente'  
-  },
+ 
   {
     path: '/expediente',
     name: 'Expediente',
     component: Expediente
+  },
+  {
+    path: '/documento',
+    name: 'Documento',
+    component: Documento
   },
   {
     path: '/documento/:id?',
@@ -38,7 +40,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(), 
+  history: createWebHashHistory(), 
   routes
 });
 

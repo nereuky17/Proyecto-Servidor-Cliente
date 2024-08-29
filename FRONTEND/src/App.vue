@@ -1,6 +1,4 @@
 <script setup>
-
-
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -9,92 +7,121 @@ const route = useRoute();
 const marginTop = computed(() => {
   switch (route.path) {
     case '/':
-      return '-65%';
+      return '0';
     case '/expediente':
-      return '-100%';
+      return '-5%';
     case '/documento':
-      return '-115%';
-    case '/expedientebus':
-      return '-120%';
-    default:
       return '-10%';
+    case '/expedientebus':
+      return '-15%';
+    default:
+      return '0';
   }
 });
-
 </script>
 
 <template>
   <div :style="{ marginTop: marginTop }" class="app">
- 
-    <nav class="navbar">
-     <img alt="Vue logo" class="logo" src="./assets/expedientee.png" width="125" height="125" /> 
-      <RouterLink to="/" class="nav-link">Home</RouterLink> |
-      <RouterLink to="/expediente" class="nav-link">Lista Expedientes</RouterLink> |
-      <RouterLink to="/documento" class="nav-link">Inserción Expediente y Documento</RouterLink> |
-      <RouterLink to="/expedientebus" class="nav-link">Búsqueda Expediente</RouterLink>
-    </nav>
-    
-    <main>
-      <RouterView />
-    </main>
+    <div class="container-fluid">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 shadow-sm">
+        <a class="navbar-brand" href="#">
+          <img alt="Vue logo" class="logo" src="./assets/expedientee.png" width="50" height="50" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <RouterLink to="/" class="nav-link">Home</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink to="/expediente" class="nav-link">Lista Expedientes</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink to="/documento" class="nav-link">Inserción Expediente y Documento</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink to="/expedientebus" class="nav-link">Búsqueda Expediente</RouterLink>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="row justify-content-center">
+        <div class="col-12 col-md-10">
+          <RouterView />
+        </div>
+      </main>
+    </div>
   </div>
 </template>
 
 <style scoped>
-
 .app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 240%;
-  margin-top: -7%;
+  min-height: 100vh;
 }
 
 .navbar {
-  background-color: grey;
-  padding:1rem;
-  padding-right: 1rem;
-  padding-left: 30%;
-  display: flex;
-  justify-content: center;
-  gap: 0px;
-  width: 144%;
-  
-  margin-left:-10%;
-  margin-right:0%;
-  z-index: 1000;
+  width: 100%;
 }
 
+/* Estilo del logo en el navbar */
+.navbar-brand .logo {
+  margin-right: 1rem;
+}
+
+/* Estilo de los enlaces de navegación */
 .nav-link {
-  color: #42b983;
+  color: #007bff !important;
   font-weight: bold;
-  text-decoration: none;
-  justify-content: center;
-  font-size: 1.2rem;
 }
 
 .nav-link:hover {
   text-decoration: underline;
-  justify-content: center;
+  color: #0056b3 !important;
 }
-.logo {
-    margin: 2 6rem 0 0;
-    height: 70%;
-    width: 7%;
-  }
 
-
+/* Estilo del main content */
 main {
-  justify-content: center;
-  padding: 1rem;
+  padding: 2rem 1rem;
 }
 
-@media (min-width: 1024px) {
+/* Estilo responsivo para el navbar en pantallas pequeñas */
+@media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-item {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
   .navbar {
-    justify-content: flex-start;
+    padding: 1rem;
+  }
+
+  .navbar-brand .logo {
+    width: 40px;
+    height: 40px;
   }
 }
-.app{
-  justify-content: center;
+
+/* Estilo adicional para mejorar el navbar */
+.navbar {
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+/* Añadir sombra al navbar */
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075) !important;
 }
 </style>
